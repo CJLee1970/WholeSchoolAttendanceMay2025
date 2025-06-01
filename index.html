@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Strategy Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0; /* Remove body padding to allow full control by wrapper */
+            box-sizing: border-box;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            min-height: 100vh; /* Ensure body takes full height for consistent scrolling */
+            display: flex; /* Use flex to center the main content vertically if it's shorter than viewport */
+            justify-content: center;
+            align-items: flex-start; /* Align items to the start (top) */
+        }
+        .presentation-wrapper {
+            position: relative; /* All slides will be absolutely positioned within this */
+            width: 100%;
+            max-width: 960px; /* Max width for the presentation area */
+            min-height: 80vh; /* Give it a minimum height to ensure consistent presentation space */
+            margin: 2rem auto; /* Add margin around the entire presentation wrapper */
+            padding: 0; /* No padding here, slides handle their own */
+            box-sizing: border-box;
+        }
+        .slide-container {
+            position: absolute; /* Stack slides on top of each other */
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            box-sizing: border-box;
+            opacity: 0;
+            visibility: hidden; /* Hide completely but maintain dimensions when active */
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            display: flex; /* Use flexbox for content alignment within slide */
+            flex-direction: column;
+            justify-content: space-between; /* Distribute space between content and takeaway */
+            min-height: 75vh; /* Ensure each slide has a minimum height to fill space */
+        }
+        .slide-container.active {
+            opacity: 1;
+            visibility: visible;
+            position: static; /* Take up space in the flow when active */
+            height: auto; /* Allow height to adjust to content */
+            min-height: 75vh; /* Maintain minimum height */
+        }
+        .navigation-buttons {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+        .nav-button {
+            background-color: #4f46e5; /* Indigo */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .nav-button:hover {
+            background-color: #4338ca; /* Darker indigo */
+            transform: translateY(-2px);
+        }
+        .nav-button:disabled {
+            background-color: #9ca3af; /* Gray */
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        audio {
+            width: 100%;
+            max-width: 400px; /* Limit audio player width */
+            margin: 1.5rem auto; /* Center audio player */
+            display: block;
+        }
+        .logo {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 80px; /* Adjusted size */
+            height: auto;
+            z-index: 10;
+        }
+        .takeaway-box {
+            position: relative; /* For lightbulb icon positioning */
+            background-color: #fffbeb; /* Light yellow */
+            border: 1px solid #fcd34d; /* Yellow border */
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-top: auto; /* Push to bottom of flex container */
+            text-align: left;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        .lightbulb-icon {
+            position: absolute;
+            top: -15px; /* Adjust to position above the box */
+            right: 15px;
+            font-size: 2.5rem; /* Adjust size */
+            color: #f59e0b; /* Amber color */
+            background-color: white; /* Match box background for floating effect */
+            padding: 0.25rem;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            line-height: 1; /* Remove extra space around emoji */
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-wrapper">
+        <div id="slide-1" class="slide-container active">
+            <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4546.jpeg" alt="Astrea Academy Trust Logo" class="logo">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-blue-800 mb-2 tracking-tight">
+                    Whole School Attendance Culture
+                </h1>
+                <h2 class="text-xl md:text-2xl font-semibold text-gray-600 mb-6">
+                    Creating a Culture of Belonging - June 2025
+                </h2>
+                <audio controls preload="auto" onerror="console.error('Audio failed to load or play:', this.src);">
+                    <source src="https://github.com/CJLee1970/WholeSchoolAttendanceMay2025/raw/refs/heads/main/audio%201%20wholeschool%20pres.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <div class="mb-8 flex justify-center">
+                    <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4568.jpeg" alt="Teacher and students interacting" class="rounded-lg shadow-md max-w-full h-auto">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                    <div class="bg-blue-50 p-6 rounded-lg shadow-md border border-blue-200">
+                        <h2 class="text-2xl font-bold text-blue-700 mb-3">Long Term Goal</h2>
+                        <p class="text-lg text-gray-700">
+                            To foster a culture of belonging and engagement, ensuring every student feels valued and motivated to attend school regularly, leading to sustained improvements in overall attendance rates.
+                        </p>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-lg shadow-md border border-green-200">
+                        <h2 class="text-2xl font-bold text-green-700 mb-3">Short Term Goal</h2>
+                        <p class="text-lg text-gray-700">
+                            Achieve a 95% attendance rate across all cohorts by the end of the current academic year, through targeted interventions and enhanced communication.
+                        </p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-8">
+                    Focusing on both long-term cultural shifts and immediate measurable improvements.
+                </p>
+            </div>
+            <div class="takeaway-box mt-8">
+                <span class="lightbulb-icon">💡</span>
+                <p class="text-gray-800 font-medium">
+                    Our strategy is a powerful blend of nurturing a long-term culture of belonging and achieving a clear, measurable short-term attendance target of 95%. It's about heart and numbers working together for our students' success.
+                </p>
+            </div>
+        </div>
+
+        <div id="slide-2" class="slide-container">
+            <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4546.jpeg" alt="Astrea Academy Trust Logo" class="logo">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-red-800 mb-6 tracking-tight">
+                    Understanding Attendance Challenges
+                </h1>
+                <audio controls preload="auto" onerror="console.error('Audio failed to load or play:', this.src);">
+                    <source src="https://github.com/CJLee1970/WholeSchoolAttendanceMay2025/raw/refs/heads/main/audio%202%20wholeschool%20pres.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <div class="mb-8 flex justify-center">
+                    <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4567.jpeg" alt="Student studying" class="rounded-lg shadow-md max-w-full h-auto">
+                </div>
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                    Addressing attendance requires a deep understanding of the multifaceted reasons why students might miss school. These challenges can range from health issues and family circumstances to social-emotional difficulties and disengagement with learning.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-red-50 p-6 rounded-lg shadow-md border border-red-200 text-left">
+                        <h2 class="text-2xl font-bold text-red-700 mb-3">Common Barriers</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Illness & Health Concerns</li>
+                            <li>Family Commitments & Support Needs</li>
+                            <li>Anxiety & Mental Health</li>
+                            <li>Bullying & Social Issues</li>
+                            <li>Lack of Engagement with Curriculum</li>
+                        </ul>
+                    </div>
+                    <div class="bg-red-50 p-6 rounded-lg shadow-md border border-red-200 text-left">
+                        <h2 class="text-2xl font-bold text-red-700 mb-3">Impact on Learning</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Academic Gaps & Falling Behind</li>
+                            <li>Reduced Social Development</li>
+                            <li>Missed Opportunities for Growth</li>
+                            <li>Long-term Educational Disadvantage</li>
+                            <li>Lower Future Prospects</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-8">
+                    Identifying and addressing these root causes is critical for effective intervention.
+                </p>
+            </div>
+            <div class="takeaway-box mt-8">
+                <span class="lightbulb-icon">💡</span>
+                <p class="text-gray-800 font-medium">
+                    Attendance challenges are multifaceted. Our top tip is to approach each case with curiosity and empathy, seeking to understand the underlying causes before determining the most appropriate support.
+                </p>
+            </div>
+        </div>
+
+        <div id="slide-3" class="slide-container">
+            <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4546.jpeg" alt="Astrea Academy Trust Logo" class="logo">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-orange-800 mb-6 tracking-tight">
+                    The Importance of Early Identification
+                </h1>
+                <audio controls preload="auto" onerror="console.error('Audio failed to load or play:', this.src);">
+                    <source src="https://github.com/CJLee1970/WholeSchoolAttendanceMay2025/raw/refs/heads/main/audio%203%20wholeschool%20pres.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                    Proactive identification of attendance issues is paramount. The sooner we recognize a pattern of absence, the more effective our interventions can be, preventing minor concerns from escalating into persistent absence.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-orange-50 p-6 rounded-lg shadow-md border border-orange-200 text-left">
+                        <h2 class="text-2xl font-bold text-orange-700 mb-3">Benefits of Early Action</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Prevents academic decline</li>
+                            <li>Reduces social-emotional impact</li>
+                            <li>Strengthens family partnerships</li>
+                            <li>Increases likelihood of successful re-engagement</li>
+                            <li>Minimizes need for formal interventions</li>
+                        </ul>
+                    </div>
+                    <div class="bg-orange-50 p-6 rounded-lg shadow-md border border-orange-200 text-left">
+                        <h2 class="text-2xl font-bold text-orange-700 mb-3">Key Indicators</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Frequent sporadic absences</li>
+                            <li>Changes in student behavior</li>
+                            <li>Withdrawal from social activities</li>
+                            <li>Declining academic performance</li>
+                            <li>Parental communication patterns</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-8">
+                    Early identification is a shared responsibility, requiring vigilance from all staff.
+                </p>
+            </div>
+            <div class="takeaway-box mt-8">
+                <span class="lightbulb-icon">💡</span>
+                <p class="text-gray-800 font-medium">
+                    Early identification is everyone's responsibility. Be vigilant, trust your instincts, and act promptly when you notice changes in a student's attendance or behavior.
+                </p>
+            </div>
+        </div>
+
+        <div id="slide-4" class="slide-container">
+            <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4546.jpeg" alt="Astrea Academy Trust Logo" class="logo">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-indigo-800 mb-6 tracking-tight">
+                    Our Tiered Intervention Approach
+                </h1>
+                <audio controls preload="auto" onerror="console.error('Audio failed to load or play:', this.src);">
+                    <source src="https://github.com/CJLee1970/WholeSchoolAttendanceMay2025/raw/refs/heads/main/audio%204%20wholeschool%20pres.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                    We employ a comprehensive, tiered approach to attendance intervention, ensuring support is tailored to individual student needs, from universal strategies to highly individualized plans.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-indigo-50 p-6 rounded-lg shadow-md border border-indigo-200 text-left">
+                        <h2 class="text-2xl font-bold text-indigo-700 mb-3">Tier 1: Universal Support</h2>
+                        <p class="text-gray-700 text-sm">
+                            Proactive strategies for all students: positive school culture, clear attendance expectations, regular communication.
+                        </p>
+                    </div>
+                    <div class="bg-indigo-100 p-6 rounded-lg shadow-md border border-indigo-300 text-left">
+                        <h2 class="text-2xl font-bold text-indigo-700 mb-3">Tier 2: Targeted Support</h2>
+                        <p class="text-gray-700 text-sm">
+                            Early intervention for students with emerging attendance concerns: check-ins, mentoring, small group support.
+                        </p>
+                    </div>
+                    <div class="bg-indigo-200 p-6 rounded-lg shadow-md border border-indigo-400 text-left">
+                        <h2 class="text-2xl font-bold text-indigo-700 mb-3">Tier 3: Intensive Support</h2>
+                        <p class="text-gray-700 text-sm">
+                            Individualized plans for persistent absence: multi-agency collaboration, EHP, attendance contracts.
+                        </p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-8">
+                    This structured approach ensures no student is left behind.
+                </p>
+            </div>
+            <div class="takeaway-box mt-8">
+                <span class="lightbulb-icon">💡</span>
+                <p class="text-gray-800 font-medium">
+                    Our tiered intervention model ensures that support is always proportionate to need, providing a safety net for every student and promoting consistent attendance across the board.
+                </p>
+            </div>
+        </div>
+
+        <div id="slide-5" class="slide-container">
+            <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4546.jpeg" alt="Astrea Academy Trust Logo" class="logo">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-pink-800 mb-6 tracking-tight">
+                    Fostering a Culture of Belonging
+                </h1>
+                <audio controls preload="auto" onerror="console.error('Audio failed to load or play:', this.src);">
+                    <source src="https://github.com/CJLee1970/WholeSchoolAttendanceMay2025/raw/refs/heads/main/audio%205%20wholeschool%20pres.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <div class="mb-8 flex justify-center">
+                    <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4566.jpeg" alt="Children playing with a parachute" class="rounded-lg shadow-md max-w-full h-auto">
+                </div>
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                    A strong sense of belonging is a powerful motivator for attendance. When students feel connected, safe, and valued, they are more likely to want to be in school and engage fully.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-pink-50 p-6 rounded-lg shadow-md border border-pink-200 text-left">
+                        <h2 class="text-2xl font-bold text-pink-700 mb-3">Key Strategies</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Positive relationships with staff</li>
+                            <li>Peer support programs</li>
+                            <li>Inclusive extracurricular activities</li>
+                            <li>Student voice and leadership opportunities</li>
+                            <li>Celebrating diversity and individuality</li>
+                        </ul>
+                    </div>
+                    <div class="bg-pink-50 p-6 rounded-lg shadow-md border border-pink-200 text-left">
+                        <h2 class="text-2xl font-bold text-pink-700 mb-3">Impact on Attendance</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Increased student motivation</li>
+                            <li>Reduced anxiety about school</li>
+                            <li>Stronger commitment to learning</li>
+                            <li>Improved overall well-being</li>
+                            <li>Decreased truancy rates</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-8">
+                    Belonging is built through consistent, positive interactions and an inclusive environment.
+                </p>
+            </div>
+            <div class="takeaway-box mt-8">
+                <span class="lightbulb-icon">💡</span>
+                <p class="text-gray-800 font-medium">
+                    A culture of belonging is built through consistent, positive interactions and a genuinely inclusive environment. Prioritizing this emotional connection is a powerful, proactive attendance strategy.
+                </p>
+            </div>
+        </div>
+
+        <div id="slide-6" class="slide-container">
+            <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4546.jpeg" alt="Astrea Academy Trust Logo" class="logo">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-purple-800 mb-8 tracking-tight">
+                    Engaging Activities for Enhanced Learning
+                </h1>
+                <audio controls preload="auto" onerror="console.error('Audio failed to load or play:', this.src);">
+                    <source src="https://github.com/CJLee1970/WholeSchoolAttendanceMay2025/raw/refs/heads/main/audio%206%20wholeschool%20pres.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-purple-50 p-6 rounded-lg shadow-md border border-purple-200 text-left">
+                        <div class="text-5xl mb-4 text-purple-600">💡</div>
+                        <h2 class="text-xl font-bold text-purple-700 mb-2">1. Interactive Quizzes</h2>
+                        <p class="text-gray-700 text-sm">
+                            Utilize online platforms to create engaging quizzes that provide instant feedback, making learning fun and competitive.
+                        </p>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-lg shadow-md border border-purple-200 text-left">
+                        <div class="text-5xl mb-4 text-purple-600">🎭</div>
+                        <h2 class="text-xl font-bold text-purple-700 mb-2">2. Role-Playing Scenarios</h2>
+                        <p class="text-gray-700 text-sm">
+                            Encourage students to act out real-life or historical situations to deepen understanding and empathy.
+                        </p>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-lg shadow-md border border-purple-200 text-left">
+                        <div class="text-5xl mb-4 text-purple-600">🎨</div>
+                        <h2 class="text-xl font-bold text-purple-700 mb-2">3. Creative Projects</h2>
+                        <p class="text-gray-700 text-sm">
+                            Assign projects that allow students to express their understanding through art, music, or digital media.
+                        </p>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-lg shadow-md border border-purple-200 text-left">
+                        <div class="text-5xl mb-4 text-purple-600">🗣️</div>
+                        <h2 class="text-xl font-bold text-purple-700 mb-2">4. Dialogue Journals</h2>
+                        <p class="text-gray-700 text-sm">
+                            Dialogue journals foster a continuous, private written conversation between students and teachers. This practice encourages students to express their thoughts, feelings, and reflections without the pressure of public scrutiny. It not only enhances writing skills but also builds trust and deepens the student-teacher relationship. Such journals have been effectively used across various educational settings to support students’ emotional and academic development.
+                        </p>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-lg shadow-md border border-purple-200 text-left">
+                        <div class="text-5xl mb-4 text-purple-600">🧠</div>
+                        <h2 class="text-xl font-bold text-purple-700 mb-2">5. Gallery Walks</h2>
+                        <p class="text-gray-700 text-sm">
+                            Gallery walks are interactive activities where students move around the classroom to engage with various prompts or displays related to the lesson. This method promotes active learning, critical thinking, and collaborative discussion. By allowing students to physically move and interact with different materials or questions, gallery walks cater to diverse learning styles and encourage students to share their perspectives in a dynamic setting.
+                        </p>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-lg shadow-md border border-purple-200 text-left">
+                        <div class="text-5xl mb-4 text-purple-600">🧩</div>
+                        <h2 class="text-xl font-bold text-purple-700 mb-2">6. Problem-Solving Games</h2>
+                        <p class="text-gray-700 text-sm">
+                            Integrate games that challenge students to apply critical thinking and collaborative problem-solving skills.
+                        </p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-8">
+                    A diverse range of activities to cater to different learning styles and maximize student engagement.
+                </p>
+            </div>
+            <div class="takeaway-box mt-8">
+                <span class="lightbulb-icon">💡</span>
+                <p class="text-gray-800 font-medium">
+                    Embrace variety! The more diverse and interactive our teaching methods, the more likely we are to capture every student's interest and foster a genuine love for learning.
+                </p>
+            </div>
+        </div>
+
+        <div id="slide-7" class="slide-container">
+            <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4546.jpeg" alt="Astrea Academy Trust Logo" class="logo">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-cyan-800 mb-6 tracking-tight">
+                    Collaborative Partnerships
+                </h1>
+                <audio controls preload="auto" onerror="console.error('Audio failed to load or play:', this.src);">
+                    <source src="https://github.com/CJLee1970/WholeSchoolAttendanceMay2025/raw/refs/heads/main/audio%207%20wholeschool%20pres.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                    Effective attendance strategies extend beyond the school gates. Building strong partnerships with parents, community organizations, and external agencies is vital for holistic student support.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-cyan-50 p-6 rounded-lg shadow-md border border-cyan-200 text-left">
+                        <h2 class="text-2xl font-bold text-cyan-700 mb-3">Parents/Guardians</h2>
+                        <p class="text-gray-700 text-sm">
+                            Regular communication, family workshops, shared responsibility for attendance.
+                        </p>
+                    </div>
+                    <div class="bg-cyan-100 p-6 rounded-lg shadow-md border border-cyan-300 text-left">
+                        <h2 class="text-2xl font-bold text-cyan-700 mb-3">Community Groups</h2>
+                        <p class="text-gray-700 text-sm">
+                            Leveraging local resources, youth clubs, mentorship programs for additional support.
+                        </p>
+                    </div>
+                    <div class="bg-cyan-200 p-6 rounded-lg shadow-md border border-cyan-400 text-left">
+                        <h2 class="text-2xl font-bold text-cyan-700 mb-3">External Agencies</h2>
+                        <p class="text-gray-700 text-sm">
+                            Working with health services, social services, and attendance officers for complex cases.
+                        </p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-8">
+                    A united front ensures comprehensive support for every child.
+                </p>
+            </div>
+            <div class="takeaway-box mt-8">
+                <span class="lightbulb-icon">💡</span>
+                <p class="text-gray-800 font-medium">
+                    A united front ensures comprehensive support for every child. Our top tip is to proactively build and maintain these partnerships, as they are essential for holistic student support.
+                </p>
+            </div>
+        </div>
+
+        <div id="slide-8" class="slide-container">
+            <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4546.jpeg" alt="Astrea Academy Trust Logo" class="logo">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-6 tracking-tight">
+                    Data-Driven Decision Making
+                </h1>
+                <audio controls preload="auto" onerror="console.error('Audio failed to load or play:', this.src);">
+                    <source src="https://github.com/CJLee1970/WholeSchoolAttendanceMay2025/raw/refs/heads/main/audio%208%20wholeschool%20pres.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                    Robust attendance data is our compass. By meticulously tracking and analyzing attendance patterns, we can identify trends, evaluate intervention effectiveness, and make informed decisions.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md border border-gray-200 text-left">
+                        <h2 class="text-2xl font-bold text-gray-700 mb-3">Key Metrics</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Overall attendance rates</li>
+                            <li>Persistent absence figures</li>
+                            <li>Absence by reason (illness, unauthorized)</li>
+                            <li>Attendance by cohort/demographic</li>
+                            <li>Intervention success rates</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md border border-gray-200 text-left">
+                        <h2 class="text-2xl font-bold text-gray-700 mb-3">Tools & Analysis</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Attendance tracking software</li>
+                            <li>Regular data review meetings</li>
+                            <li>Trend identification</li>
+                            <li>Impact assessment of strategies</li>
+                            <li>Forecasting potential issues</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-8">
+                    Data transforms intuition into actionable insights.
+                </p>
+            </div>
+            <div class="takeaway-box mt-8">
+                <span class="lightbulb-icon">💡</span>
+                <p class="text-gray-800 font-medium">
+                    Data transforms intuition into actionable insights. Our top tip is to regularly review your attendance data, not just to track numbers, but to understand the stories and needs behind them.
+                </p>
+            </div>
+        </div>
+
+        <div id="slide-9" class="slide-container">
+            <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4546.jpeg" alt="Astrea Academy Trust Logo" class="logo">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-yellow-800 mb-6 tracking-tight">
+                    Staff Training & Development
+                </h1>
+                <audio controls preload="auto" onerror="console.error('Audio failed to load or play:', this.src);">
+                    <source src="https://github.com/CJLee1970/WholeSchoolAttendanceMay2025/raw/refs/heads/main/audio%209%20wholeschool%20pres.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                    Our staff are at the forefront of attendance improvement. Equipping them with the knowledge, skills, and confidence to identify, support, and intervene effectively is paramount.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-yellow-50 p-6 rounded-lg shadow-md border border-yellow-200 text-left">
+                        <h2 class="text-2xl font-bold text-yellow-700 mb-3">Training Areas</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Early identification protocols</li>
+                            <li>Communication strategies with families</li>
+                            <li>Understanding attendance policies</li>
+                            <li>Safeguarding links to attendance</li>
+                            <li>Mental health awareness & support</li>
+                        </ul>
+                    </div>
+                    <div class="bg-yellow-50 p-6 rounded-lg shadow-md border border-yellow-200 text-left">
+                        <h2 class="text-2xl font-bold text-yellow-700 mb-3">Benefits</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Consistent approach across school</li>
+                            <li>Increased staff confidence</li>
+                            <li>Improved early intervention</li>
+                            <li>Stronger home-school partnerships</li>
+                            <li>Enhanced student support</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-8">
+                    Investing in our staff is investing in our students' attendance.
+                </p>
+            </div>
+            <div class="takeaway-box mt-8">
+                <span class="lightbulb-icon">💡</span>
+                <p class="text-gray-800 font-medium">
+                    Investing in our staff is investing directly in our students' attendance. Our top tip is to prioritize ongoing professional development in attendance management, ensuring every staff member feels empowered and knowledgeable.
+                </p>
+            </div>
+        </div>
+
+        <div id="slide-10" class="slide-container">
+            <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4546.jpeg" alt="Astrea Academy Trust Logo" class="logo">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-6 tracking-tight">
+                    Celebrating Success & Rewards
+                </h1>
+                <audio controls preload="auto" onerror="console.error('Audio failed to load or play:', this.src);">
+                    <source src="https://github.com/CJLee1970/WholeSchoolAttendanceMay2025/raw/refs/heads/main/audio%2010%20wholeschool%20pres.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <div class="mb-8 flex justify-center">
+                    <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4569.jpeg" alt="Students engaged in a positive activity" class="rounded-lg shadow-md max-w-full h-auto">
+                </div>
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                    Positive reinforcement is a powerful tool. Recognizing and celebrating excellent attendance and significant improvements motivates students and reinforces the value of being present.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-green-50 p-6 rounded-lg shadow-md border border-green-200 text-left">
+                        <h2 class="text-2xl font-bold text-green-700 mb-3">Reward Systems</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Certificates & recognition</li>
+                            <li>Class/house competitions</li>
+                            <li>Special privileges or events</li>
+                            <li>Positive communication home</li>
+                            <li>Personalized encouragement</li>
+                        </ul>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-lg shadow-md border border-green-200 text-left">
+                        <h2 class="text-2xl font-bold text-green-700 mb-3">Impact on Motivation</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Encourages consistent attendance</li>
+                            <li>Builds self-esteem</li>
+                            <li>Fosters a positive attitude towards school</li>
+                            <li>Creates a culture of achievement</li>
+                            <li>Engages families in celebration</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-8">
+                    Every step forward, no matter how small, deserves recognition.
+                </p>
+            </div>
+            <div class="takeaway-box mt-8">
+                <span class="lightbulb-icon">💡</span>
+                <p class="text-gray-800 font-medium">
+                    Every step forward, no matter how small, deserves recognition. Our top tip is to create a dynamic and visible reward system that celebrates consistent attendance and significant improvements, making it a positive aspiration for all.
+                </p>
+            </div>
+        </div>
+
+        <div id="slide-11" class="slide-container">
+            <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4546.jpeg" alt="Astrea Academy Trust Logo" class="logo">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-blue-800 mb-6 tracking-tight">
+                    Communication Strategies
+                </h1>
+                <audio controls preload="auto" onerror="console.error('Audio failed to load or play:', this.src);">
+                    <source src="https://github.com/CJLee1970/WholeSchoolAttendanceMay2025/raw/refs/heads/main/audio%2011%20wholeschool%20pres.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                    Clear, consistent, and empathetic communication is the cornerstone of effective attendance management. It builds trust and ensures everyone is informed and working together.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-blue-50 p-6 rounded-lg shadow-md border border-blue-200 text-left">
+                        <h2 class="text-2xl font-bold text-blue-700 mb-3">Channels</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Regular newsletters & updates</li>
+                            <li>Parent-teacher meetings</li>
+                            <li>Dedicated attendance hotline/email</li>
+                            <li>School website & social media</li>
+                            <li>Home visits (when appropriate)</li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-lg shadow-md border border-blue-200 text-left">
+                        <h2 class="text-2xl font-bold text-blue-700 mb-3">Key Messages</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Importance of daily attendance</li>
+                            <li>Impact of absence on learning</li>
+                            <li>Support available for families</li>
+                            <li>Celebrating attendance achievements</li>
+                            <li>Clear reporting procedures</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-8">
+                    Open lines of communication foster a supportive environment.
+                </p>
+            </div>
+            <div class="takeaway-box mt-8">
+                <span class="lightbulb-icon">💡</span>
+                <p class="text-gray-800 font-medium">
+                    Open lines of communication foster a supportive environment. Our top tip is to be proactive, positive, and persistent in your communication, ensuring families feel supported and informed every step of the way.
+                </p>
+            </div>
+        </div>
+
+        <div id="slide-12" class="slide-container">
+            <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4546.jpeg" alt="Astrea Academy Trust Logo" class="logo">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-purple-800 mb-6 tracking-tight">
+                    Safeguarding and Welfare Links
+                </h1>
+                <audio controls preload="auto" onerror="console.error('Audio failed to load or play:', this.src);">
+                    <source src="https://github.com/CJLee1970/WholeSchoolAttendanceMay2025/raw/refs/heads/main/audio%2012%20wholeschool%20pres.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                    Attendance is intrinsically linked to student safeguarding and welfare. Unexplained or persistent absence can be a red flag, indicating underlying issues that require sensitive and timely intervention.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-purple-50 p-6 rounded-lg shadow-md border border-purple-200 text-left">
+                        <h2 class="text-2xl font-bold text-purple-700 mb-3">Recognizing Concerns</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Sudden drop in attendance</li>
+                            <li>Frequent illness reports</li>
+                            <li>Changes in behavior/appearance</li>
+                            <li>Reluctance to come to school</li>
+                            <li>Family dynamics shifts</li>
+                        </ul>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-lg shadow-md border border-purple-200 text-left">
+                        <h2 class="text-2xl font-bold text-purple-700 mb-3">Our Response</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Immediate follow-up on absences</li>
+                            <li>Welfare checks & home visits</li>
+                            <li>Collaboration with safeguarding leads</li>
+                            <li>Referrals to external support agencies</li>
+                            <li>Creating a safe and supportive environment</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-8">
+                    Every absence is an opportunity to ensure a child's safety and well-being.
+                </p>
+            </div>
+            <div class="takeaway-box mt-8">
+                <span class="lightbulb-icon">💡</span>
+                <p class="text-gray-800 font-medium">
+                    Every absence is an opportunity to ensure a child's safety and well-being. Our top tip is to always consider attendance through a safeguarding lens, acting swiftly and compassionately when concerns arise.
+                </p>
+            </div>
+        </div>
+
+        <div id="slide-13" class="slide-container">
+            <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4546.jpeg" alt="Astrea Academy Trust Logo" class="logo">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-teal-800 mb-6 tracking-tight">
+                    Roles and Responsibilities
+                </h1>
+                <audio controls preload="auto" onerror="console.error('Audio failed to load or play:', this.src);">
+                    <source src="https://github.com/CJLee1970/WholeSchoolAttendanceMay2025/raw/refs/heads/main/audio%2013%20wholeschool%20pres.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                    Improving attendance is a collective effort. Every member of our school community plays a vital role in ensuring students are present and engaged, from leadership to classroom staff and support teams.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-teal-50 p-6 rounded-lg shadow-md border border-teal-200 text-left">
+                        <h2 class="text-2xl font-bold text-teal-700 mb-3">Key Stakeholders</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Leadership: Policy, strategy, oversight</li>
+                            <li>Teachers: Daily monitoring, classroom engagement, early flags</li>
+                            <li>Support Staff: First contact, welfare checks, administrative support</li>
+                            <li>Parents/Guardians: Ensuring attendance, communication with school</li>
+                            <li>Students: Understanding importance, active participation</li>
+                        </ul>
+                    </div>
+                    <div class="bg-teal-50 p-6 rounded-lg shadow-md border border-teal-200 text-left">
+                        <h2 class="text-2xl font-bold text-teal-700 mb-3">Shared Commitment</h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Consistent application of policies</li>
+                            <li>Open communication channels</li>
+                            <li>Collaborative problem-solving</li>
+                            <li>Mutual respect and understanding</li>
+                            <li>Focus on student well-being</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-8">
+                    When everyone plays their part, attendance thrives.
+                </p>
+            </div>
+            <div class="takeaway-box mt-8">
+                <span class="lightbulb-icon">💡</span>
+                <p class="text-gray-800 font-medium">
+                    When everyone plays their part, attendance thrives. Our top tip is to foster a culture where every staff member feels empowered and responsible for contributing to positive attendance outcomes.
+                </p>
+            </div>
+        </div>
+
+        <div id="slide-14" class="slide-container">
+            <img src="https://raw.githubusercontent.com/CJLee1970/WholeSchoolAttendanceMay2025/main/IMG_4546.jpeg" alt="Astrea Academy Trust Logo" class="logo">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-teal-800 mb-8 tracking-tight">
+                    Strategic Timeline & Focus
+                </h1>
+                <audio controls preload="auto" onerror="console.error('Audio failed to load or play:', this.src);">
+                    <source src="https://github.com/CJLee1970/WholeSchoolAttendanceMay2025/raw/refs/heads/main/audio%2014%20wholeschool%20pres.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <div class="bg-yellow-50 p-6 rounded-lg shadow-md border border-yellow-200 mb-8 text-left">
+                    <h2 class="text-2xl font-bold text-yellow-700 mb-3 flex items-center">
+                        <span class="text-4xl mr-3">🗓️</span> Term 3: Maximizing 2024/25 (Current Focus)
+                    </h2>
+                    <p class="text-gray-700 mb-4">
+                        With 7 weeks remaining in the 2024/25 academic year, our focus is on maximizing the remainder of this school year. We will build on our strengths, including our welcoming environment, culture of belonging, effective parent communication, and rewarding excellent attendance.
+                    </p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>All Staff Training: Ensure everyone understands our strategic efforts, operational tweaks, and respective roles and responsibilities for creating a culture of belonging and embracing early identification systems to improve attendance.</li>
+                        <li>Positive Communication: Increase opportunities to communicate positive messages around attendance and engagement in readiness for 2025/26.</li>
+                    </ul>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 p-6 rounded-lg shadow-md border border-blue-200 text-left">
+                        <h3 class="text-xl font-bold text-blue-700 mb-2 flex items-center">
+                            <span class="text-3xl mr-2">🚀</span> Term 1: 2025/26 Launch
+                        </h3>
+                        <ul class="list-disc list-inside text-gray-700 text-sm space-y-1">
+                            <li>Build on robustness of attendance monitoring and data tracking.</li>
+                            <li>Communicate high expectations.</li>
+                            <li>Initiate early identification systems to prevent attendance falling across cohorts and with specific families and children.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-lg shadow-md border border-green-200 text-left">
+                        <h3 class="text-xl font-bold text-green-700 mb-2 flex items-center">
+                            <span class="text-3xl mr-2">📈</span> Term 2: 2025/26 Review & Support
+                        </h3>
+                        <ul class="list-disc list-inside text-gray-700 text-sm space-y-1">
+                            <li>Review and analyze intervention impact.</li>
+                            <li>Continue support for all students and families struggling with attendance.</li>
+                            <li>Reward excellent attendees and those demonstrating improvements in short and long-term trends.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-lg shadow-md border border-purple-200 text-left">
+                        <h3 class="text-xl font-bold text-purple-700 mb-2 flex items-center">
+                            <span class="text-3xl mr-2">🎯</span> Term 3: 2025/26 Evaluation
+                        </h3>
+                        <ul class="list-disc list-inside text-gray-700 text-sm space-y-1">
+                            <li>12-month strategy review.</li>
+                            <li>Analyze attendance data and collect real-world/anecdotal evidence of successes and ongoing barriers.</li>
+                            <li>Deep understanding of external support (Sheffield, Shiregreen).</li>
+                            <li>Monitor interventions and escalations (Early Help, AIPs, Contracts, Penalty Notices).</li>
+                            <li>Standard data metrics & cohort analysis (Persistent Absence reduction, FSM/Non-FSM analysis).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p class="text-sm text-gray-500 mt-8">
+                    A phased approach to ensure continuous improvement and sustainable attendance gains.
+                </p>
+            </div>
+            <div class="takeaway-box mt-8">
+                <span class="lightbulb-icon">💡</span>
+                <p class="text-gray-800 font-medium">
+                    Our attendance strategy is a continuous, evolving journey, combining immediate action with a structured, data-driven, and collaborative long-term plan to ensure every student is present and thriving.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation-buttons">
+        <button id="prevBtn" class="nav-button" disabled>Previous</button>
+        <button id="nextBtn" class="nav-button">Next</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide-container');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+
+        // Function to pause all audio elements
+        function pauseAllAudio() {
+            document.querySelectorAll('audio').forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0; // Reset audio to start
+            });
+        }
+
+        function showSlide(index) {
+            pauseAllAudio(); // Pause audio on current slide before changing
+
+            // Hide all slides first
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+                slide.style.position = 'absolute'; // Ensure it's absolute when hidden
+                slide.style.visibility = 'hidden';
+                slide.style.opacity = '0';
+            });
+
+            // Show the active slide
+            const activeSlide = slides[index];
+            activeSlide.style.position = 'static'; // Allow it to take up space in the flow
+            activeSlide.style.visibility = 'visible';
+            activeSlide.style.opacity = '1';
+            activeSlide.classList.add('active');
+
+            updateButtons();
+            window.scrollTo(0, 0); // Scroll to the top of the page when a new slide is shown
+        }
+
+        function updateButtons() {
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+
+        // Initialize on load
+        window.onload = () => {
+            showSlide(currentSlide);
+        };
+    </script>
+</body>
+</html>
